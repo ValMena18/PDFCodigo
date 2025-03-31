@@ -3,115 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ReservationPDF - Visualización de Código</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
-    <script>hljs.highlightAll();</script>
+    <title>Generador de PDF para Reservas</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            max-width: 1200px;
+            color: #333;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 20px;
-            color: #333;
             background-color: #f5f5f5;
         }
-        header {
-            background-color: #2c3e50;
-            color: white;
-            padding: 20px;
-            border-radius: 5px;
-            margin-bottom: 30px;
-        }
         h1 {
-            margin: 0;
-            font-size: 28px;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498db;
         }
-        .subtitle {
-            font-size: 16px;
-            opacity: 0.8;
-        }
-        .container {
-            display: flex;
-            gap: 20px;
-        }
-        .code-section {
-            flex: 1;
-            background: white;
+        h2 {
+            color: #2c3e50;
+            background-color: #e8f4fc;
+            padding: 10px;
             border-radius: 5px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-top: 30px;
+        }
+        .code-container {
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
             overflow: hidden;
         }
         .code-header {
-            background: #3a3f44;
+            background-color: #003366;
             color: white;
-            padding: 10px 15px;
+            padding: 8px 15px;
             font-weight: bold;
             display: flex;
             justify-content: space-between;
         }
-        pre {
-            margin: 0;
+        .code-content {
             padding: 15px;
             overflow-x: auto;
         }
         .description {
-            flex: 0 0 300px;
-            background: white;
-            padding: 20px;
+            background-color: white;
+            padding: 15px;
             border-radius: 5px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
-        .description h2 {
-            color: #2c3e50;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 10px;
+        .note {
+            background-color: #e7f5ff;
+            border-left: 4px solid #4dabf7;
+            padding: 12px;
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
         }
-        .features {
-            margin-top: 20px;
-        }
-        .feature {
-            margin-bottom: 15px;
-        }
-        .feature h3 {
-            margin-bottom: 5px;
-            color: #3498db;
-        }
-        .btn {
-            display: inline-block;
-            padding: 8px 16px;
-            background-color: #3498db;
-            color: white;
-            text-decoration: none;
+        /* Estilos para el código */
+        .language-javascript {
+            display: block;
+            background: #f8f9fa;
+            padding: 15px;
             border-radius: 4px;
-            margin-top: 10px;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #333;
+            tab-size: 4;
         }
-        .btn:hover {
-            background-color: #2980b9;
+        .token.comment,
+        .token.prolog,
+        .token.doctype,
+        .token.cdata {
+            color: #6a9955;
         }
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-            }
-            .description {
-                margin-top: 20px;
-            }
+        .token.punctuation {
+            color: #d4d4d4;
+        }
+        .token.property,
+        .token.tag,
+        .token.boolean,
+        .token.number,
+        .token.constant,
+        .token.symbol,
+        .token.deleted {
+            color: #b5cea8;
+        }
+        .token.selector,
+        .token.attr-name,
+        .token.string,
+        .token.char,
+        .token.builtin,
+        .token.inserted {
+            color: #ce9178;
+        }
+        .token.operator,
+        .token.entity,
+        .token.url,
+        .language-css .token.string,
+        .style .token.string {
+            color: #d4d4d4;
+        }
+        .token.atrule,
+        .token.attr-value,
+        .token.keyword {
+            color: #569cd6;
+        }
+        .token.function,
+        .token.class-name {
+            color: #dcdcaa;
+        }
+        .token.regex,
+        .token.important,
+        .token.variable {
+            color: #d16969;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>ReservationPDF</h1>
-        <p class="subtitle">Componente React para generación de PDFs de reservas</p>
-    </header>
+    <h1>Generador de PDF para Reservas de Cruceros</h1>
+    
+    <div class="description">
+        <p>Este documento muestra los dos componentes principales para generar y descargar un PDF con los detalles de una reserva de crucero:</p>
+        <ol>
+            <li><strong>ReservationPDF</strong>: Componente que genera la estructura y diseño del PDF</li>
+            <li><strong>PDFDownloadLink</strong>: Componente que implementa el botón de descarga</li>
+        </ol>
+    </div>
 
-    <div class="container">
-        <div class="code-section">
-            <div class="code-header">
-                <span>ReservationPDF.jsx</span>
-                <span>React + React-PDF</span>
-            </div>
+    <h2>1. Componente ReservationPDF</h2>
+    
+    <div class="note">
+        Este componente recibe los datos de la reserva y genera un documento PDF con todas las secciones necesarias:
+        encabezado, detalles del crucero, itinerario, habitaciones, servicios adicionales, resumen de pagos y estado.
+    </div>
+    
+    <div class="code-container">
+        <div class="code-header">
+            <span>PDFGenerator.jsx</span>
+            <span>Componente Principal</span>
+        </div>
+        <div class="code-content">
             <pre><code class="language-javascript">// eslint-disable-next-line no-unused-vars
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -124,7 +159,6 @@ import {
   Image,
 } from '@react-pdf/renderer';
 import logoImage from '../../assets/Logo.png';
-
 
 // Función para formatear valores monetarios
 const formatCurrency = (value) => {
@@ -146,7 +180,6 @@ const formatDate = (dateString) => {
     return dateString;
   }
 };
-
 
 const styles = StyleSheet.create({
   page: {
@@ -309,23 +342,19 @@ const styles = StyleSheet.create({
     padding: 8,
     backgroundColor: '#f8f9fa',
     borderRadius: 4,
-
   },
 });
 
 const ReservationPDF = ({ reservation }) => {
-
-
   if (!reservation) {
     return (
-      <Document>
-        <Page size="A4" style={styles.page}>
-          <Text>No hay datos de reserva disponibles</Text>
-        </Page>
-      </Document>
+      &lt;Document&gt;
+        &lt;Page size="A4" style={styles.page}&gt;
+          &lt;Text&gt;No hay datos de reserva disponibles&lt;/Text&gt;
+        &lt;/Page&gt;
+      &lt;/Document&gt;
     );
   }
-
   
   // Cálculo de totales
   const totalHabitaciones = reservation.habitaciones?.reduce((sum, item) => sum + (Number(item.total) || 0), 0) || 0;
@@ -335,168 +364,162 @@ const ReservationPDF = ({ reservation }) => {
   const total = (reservation.totales?.total) || (subtotal + iva);
 
   return (
-    <Document>
-      <Page size="A4" style={styles.page}>
-
+    &lt;Document&gt;
+      &lt;Page size="A4" style={styles.page}&gt;
         {/* Encabezado */}
-        <View style={styles.header}>
-        <Image style={styles.logo} src={logoImage} />
-          <View>
-            <Text style={styles.title}>Resumen de Reserva #{reservation.reserva?.id_reserva || 'N/A'}</Text>
-            <Text style={styles.subtitle}>Fecha: {formatDate(new Date().toISOString())}</Text>
-          </View>
-        </View>
+        &lt;View style={styles.header}&gt;
+          &lt;Image style={styles.logo} src={logoImage} /&gt;
+          &lt;View&gt;
+            &lt;Text style={styles.title}&gt;Resumen de Reserva #{reservation.reserva?.id_reserva || 'N/A'}&lt;/Text&gt;
+            &lt;Text style={styles.subtitle}&gt;Fecha: {formatDate(new Date().toISOString())}&lt;/Text&gt;
+          &lt;/View&gt;
+        &lt;/View&gt;
 
         {/* Información del Crucero */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Detalles del Crucero</Text>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={styles.infoText}>
-              <Text style={{fontWeight: 'bold'}}>Crucero: </Text>
+        &lt;View style={styles.section}&gt;
+          &lt;Text style={styles.sectionTitle}&gt;Detalles del Crucero&lt;/Text&gt;
+          &lt;View style={{flexDirection: 'row', justifyContent: 'space-between'}}&gt;
+            &lt;Text style={styles.infoText}&gt;
+              &lt;Text style={{fontWeight: 'bold'}}&gt;Crucero: &lt;/Text&gt;
               {reservation.reserva?.nombre_crucero || 'No especificado'}
-            </Text>
-            <Text style={styles.infoText}>
-              <Text style={{fontWeight: 'bold'}}>Pasajeros: </Text>
+            &lt;/Text&gt;
+            &lt;Text style={styles.infoText}&gt;
+              &lt;Text style={{fontWeight: 'bold'}}&gt;Pasajeros: &lt;/Text&gt;
               {reservation.reserva?.cantidad_pasajeros || 0}
-            </Text>
-            <Text style={styles.infoText}>
-              <Text style={{fontWeight: 'bold'}}>Duración: </Text>
+            &lt;/Text&gt;
+            &lt;Text style={styles.infoText}&gt;
+              &lt;Text style={{fontWeight: 'bold'}}&gt;Duración: &lt;/Text&gt;
               {reservation.reserva?.duracion_dias || 0} días
-            </Text>
-            <Text style={styles.infoText}>
-              <Text style={{fontWeight: 'bold'}}>Pago: </Text>
+            &lt;/Text&gt;
+            &lt;Text style={styles.infoText}&gt;
+              &lt;Text style={{fontWeight: 'bold'}}&gt;Pago: &lt;/Text&gt;
               {reservation.reserva?.metodo_pago || 'No especificado'}
-            </Text>
-          </View>
-        </View>
+            &lt;/Text&gt;
+          &lt;/View&gt;
+        &lt;/View&gt;
 
         {/* Itinerario compacto */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Itinerario</Text>
-          <View style={styles.twoColumns}>
-            <View style={styles.infoBox}>
-              <Text style={{fontWeight: 'bold', marginBottom: 2}}>Salida:</Text>
-              <Text style={styles.infoText}>{reservation.puertos?.salida || 'No especificado'}</Text>
-              <Text style={styles.infoText}>{formatDate(reservation.reserva?.fecha_inicio)}</Text>
-            </View>
-            <View style={styles.infoBox}>
-              <Text style={{fontWeight: 'bold', marginBottom: 2}}>Regreso:</Text>
-              <Text style={styles.infoText}>{reservation.puertos?.regreso || 'No especificado'}</Text>
-              <Text style={styles.infoText}>{formatDate(reservation.fecha_fin)}</Text>
-            </View>
-          </View>
-        </View>
+        &lt;View style={styles.section}&gt;
+          &lt;Text style={styles.sectionTitle}&gt;Itinerario&lt;/Text&gt;
+          &lt;View style={styles.twoColumns}&gt;
+            &lt;View style={styles.infoBox}&gt;
+              &lt;Text style={{fontWeight: 'bold', marginBottom: 2}}&gt;Salida:&lt;/Text&gt;
+              &lt;Text style={styles.infoText}&gt;{reservation.puertos?.salida || 'No especificado'}&lt;/Text&gt;
+              &lt;Text style={styles.infoText}&gt;{formatDate(reservation.reserva?.fecha_inicio)}&lt;/Text&gt;
+            &lt;/View&gt;
+            &lt;View style={styles.infoBox}&gt;
+              &lt;Text style={{fontWeight: 'bold', marginBottom: 2}}&gt;Regreso:&lt;/Text&gt;
+              &lt;Text style={styles.infoText}&gt;{reservation.puertos?.regreso || 'No especificado'}&lt;/Text&gt;
+              &lt;Text style={styles.infoText}&gt;{formatDate(reservation.fecha_fin)}&lt;/Text&gt;
+            &lt;/View&gt;
+          &lt;/View&gt;
+        &lt;/View&gt;
 
         {/* Habitaciones - Tabla compacta */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Habitaciones ({reservation.habitaciones?.length || 0})</Text>
-          <View style={styles.table}>
-            <View style={styles.tableHeader}>
-              <Text style={[styles.tableCol, {width: '40%'}]}>Tipo</Text>
-              <Text style={styles.tableColCenter}>Cant.</Text>
-              <Text style={styles.tableColCenter}>Pers.</Text>
-              <Text style={styles.tableColRight}>P. Unit.</Text>
-              <Text style={styles.tableColRight}>Total</Text>
-            </View>
+        &lt;View style={styles.section}&gt;
+          &lt;Text style={styles.sectionTitle}&gt;Habitaciones ({reservation.habitaciones?.length || 0})&lt;/Text&gt;
+          &lt;View style={styles.table}&gt;
+            &lt;View style={styles.tableHeader}&gt;
+              &lt;Text style={[styles.tableCol, {width: '40%'}]}&gt;Tipo&lt;/Text&gt;
+              &lt;Text style={styles.tableColCenter}&gt;Cant.&lt;/Text&gt;
+              &lt;Text style={styles.tableColCenter}&gt;Pers.&lt;/Text&gt;
+              &lt;Text style={styles.tableColRight}&gt;P. Unit.&lt;/Text&gt;
+              &lt;Text style={styles.tableColRight}&gt;Total&lt;/Text&gt;
+            &lt;/View&gt;
             
             {reservation.habitaciones.map((habitacion, index) => (
-              <View key={index} style={styles.tableRow}>
-                <Text style={[styles.tableCol, {width: '40%'}]}>{habitacion.nombre || 'N/A'}</Text>
-                <Text style={styles.tableColCenter}>{habitacion.cantidad || 0}</Text>
-                <Text style={styles.tableColCenter}>{habitacion.cantidad_huespedes || 0}</Text>
-                <Text style={styles.tableColRight}>$ {formatCurrency(habitacion.precio)}</Text>
-                <Text style={styles.tableColRight}>$ {formatCurrency(habitacion.total)}</Text>
-              </View>
+              &lt;View key={index} style={styles.tableRow}&gt;
+                &lt;Text style={[styles.tableCol, {width: '40%'}]}&gt;{habitacion.nombre || 'N/A'}&lt;/Text&gt;
+                &lt;Text style={styles.tableColCenter}&gt;{habitacion.cantidad || 0}&lt;/Text&gt;
+                &lt;Text style={styles.tableColCenter}&gt;{habitacion.cantidad_huespedes || 0}&lt;/Text&gt;
+                &lt;Text style={styles.tableColRight}&gt;$ {formatCurrency(habitacion.precio)}&lt;/Text&gt;
+                &lt;Text style={styles.tableColRight}&gt;$ {formatCurrency(habitacion.total)}&lt;/Text&gt;
+              &lt;/View&gt;
             ))}
 
-          <View style={styles.tableRow}>
-          <Text style={[styles.tableCol, {width: '80%', fontWeight: 'bold'}]}>Total Habitaciones</Text>
-              
-              <Text style={[styles.tableColRight, {fontWeight: 'bold'} ]}>$ {formatCurrency(totalHabitaciones)}</Text>
-          </View>
-          </View>
-        </View>
+            &lt;View style={styles.tableRow}&gt;
+              &lt;Text style={[styles.tableCol, {width: '80%', fontWeight: 'bold'}]}&gt;Total Habitaciones&lt;/Text&gt;
+              &lt;Text style={[styles.tableColRight, {fontWeight: 'bold'}]}&gt;$ {formatCurrency(totalHabitaciones)}&lt;/Text&gt;
+            &lt;/View&gt;
+          &lt;/View&gt;
+        &lt;/View&gt;
 
         {/* Complementos - Solo si existen */}
         {reservation.complementos.length > 0 && (
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Servicios Adicionales ({reservation.complementos.length})</Text>
-            <View style={styles.table}>
-              <View style={styles.tableHeader}>
-                <Text style={styles.tableCol}>Servicio</Text>
-                <Text style={styles.tableColCenter}>Cant.</Text>
-                <Text style={styles.tableColRight}>P. Unit.</Text>
-                <Text style={styles.tableColRight}>Total</Text>
-              </View>
+          &lt;View style={styles.section}&gt;
+            &lt;Text style={styles.sectionTitle}&gt;Servicios Adicionales ({reservation.complementos.length})&lt;/Text&gt;
+            &lt;View style={styles.table}&gt;
+              &lt;View style={styles.tableHeader}&gt;
+                &lt;Text style={styles.tableCol}&gt;Servicio&lt;/Text&gt;
+                &lt;Text style={styles.tableColCenter}&gt;Cant.&lt;/Text&gt;
+                &lt;Text style={styles.tableColRight}&gt;P. Unit.&lt;/Text&gt;
+                &lt;Text style={styles.tableColRight}&gt;Total&lt;/Text&gt;
+              &lt;/View&gt;
               
               {reservation.complementos.map((complemento, index) => (
-                <View key={index} style={styles.tableRow}>
-                  <Text style={styles.tableCol}>{complemento.nombre || 'N/A'}</Text>
-                  <Text style={styles.tableColCenter}>{complemento.cantidad || 0}</Text>
-                  <Text style={styles.tableColRight}>$ {formatCurrency(complemento.precio)}</Text>
-                  <Text style={styles.tableColRight}>$ {formatCurrency(complemento.total)}</Text>
-                </View>
+                &lt;View key={index} style={styles.tableRow}&gt;
+                  &lt;Text style={styles.tableCol}&gt;{complemento.nombre || 'N/A'}&lt;/Text&gt;
+                  &lt;Text style={styles.tableColCenter}&gt;{complemento.cantidad || 0}&lt;/Text&gt;
+                  &lt;Text style={styles.tableColRight}&gt;$ {formatCurrency(complemento.precio)}&lt;/Text&gt;
+                  &lt;Text style={styles.tableColRight}&gt;$ {formatCurrency(complemento.total)}&lt;/Text&gt;
+                &lt;/View&gt;
               ))}
               
-          <View style={styles.tableRow}>
-          <Text style={[styles.tableCol, {width: '80%', fontWeight: 'bold'}]}>Total Complementos</Text>
-              
-              <Text style={[styles.tableColRight, {fontWeight: 'bold'} ]}>$ {formatCurrency(totalComplementos)}</Text>
-          </View>
-            </View>
-            
-          </View>
+              &lt;View style={styles.tableRow}&gt;
+                &lt;Text style={[styles.tableCol, {width: '80%', fontWeight: 'bold'}]}&gt;Total Complementos&lt;/Text&gt;
+                &lt;Text style={[styles.tableColRight, {fontWeight: 'bold'}]}&gt;$ {formatCurrency(totalComplementos)}&lt;/Text&gt;
+              &lt;/View&gt;
+            &lt;/View&gt;
+          &lt;/View&gt;
         )}
 
         {/* Totales compactos */}
-        <View style={[styles.section, styles.totalsContainer]}>
-          <Text style={styles.sectionTitle}>Resumen de Pagos</Text>
-          <View>
-            <View style={styles.totalsRow}>
-              <Text style={styles.totalLabel}>Subtotal:</Text>
-              <Text style={styles.totalValue}>$ {formatCurrency(subtotal)}</Text>
-            </View>
-            <View style={styles.totalsRow}>
-              <Text style={styles.totalLabel}>Impuestos (13%):</Text>
-              <Text style={styles.totalValue}>$ {formatCurrency(iva)}</Text>
-            </View>
-            <View style={[styles.totalsRow, styles.grandTotal]}>
-              <Text style={styles.totalLabel}>TOTAL:</Text>
-              <Text style={[styles.totalValue, {fontWeight: 'bold'}]}>$ {formatCurrency(total)}</Text>
-            </View>
-          </View>
-        </View>
+        &lt;View style={[styles.section, styles.totalsContainer]}&gt;
+          &lt;Text style={styles.sectionTitle}&gt;Resumen de Pagos&lt;/Text&gt;
+          &lt;View&gt;
+            &lt;View style={styles.totalsRow}&gt;
+              &lt;Text style={styles.totalLabel}&gt;Subtotal:&lt;/Text&gt;
+              &lt;Text style={styles.totalValue}&gt;$ {formatCurrency(subtotal)}&lt;/Text&gt;
+            &lt;/View&gt;
+            &lt;View style={styles.totalsRow}&gt;
+              &lt;Text style={styles.totalLabel}&gt;Impuestos (13%):&lt;/Text&gt;
+              &lt;Text style={styles.totalValue}&gt;$ {formatCurrency(iva)}&lt;/Text&gt;
+            &lt;/View&gt;
+            &lt;View style={[styles.totalsRow, styles.grandTotal]}&gt;
+              &lt;Text style={styles.totalLabel}&gt;TOTAL:&lt;/Text&gt;
+              &lt;Text style={[styles.totalValue, {fontWeight: 'bold'}]}&gt;$ {formatCurrency(total)}&lt;/Text&gt;
+            &lt;/View&gt;
+          &lt;/View&gt;
+        &lt;/View&gt;
 
         {/* Estado del Pago compacto */}
-        <View style={styles.statusContainer}>
-          <Text style={{fontWeight: 'bold', marginBottom: 4, fontSize: 9}}>ESTADO:</Text>
+        &lt;View style={styles.statusContainer}&gt;
+          &lt;Text style={{fontWeight: 'bold', marginBottom: 4, fontSize: 9}}&gt;ESTADO:&lt;/Text&gt;
           
           {reservation.reserva?.estado_pago === 'Completado' ? (
-            <Text style={styles.statusPaid}>PAGO COMPLETO</Text>
+            &lt;Text style={styles.statusPaid}&gt;PAGO COMPLETO&lt;/Text&gt;
           ) : (
-            <>
-              <Text style={styles.statusPending}>PENDIENTE DE PAGO</Text>
+            &lt;&gt;
+              &lt;Text style={styles.statusPending}&gt;PENDIENTE DE PAGO&lt;/Text&gt;
               {reservation.reserva?.fecha_limite_pago && (
-                <Text style={styles.infoText}>
-                  <Text style={{fontWeight: 'bold'}}>Vence: </Text>
+                &lt;Text style={styles.infoText}&gt;
+                  &lt;Text style={{fontWeight: 'bold'}}&gt;Vence: &lt;/Text&gt;
                   {formatDate(reservation.reserva.fecha_limite_pago)}
-                </Text>
+                &lt;/Text&gt;
               )}
-              <Text style={styles.warningText}>
+              &lt;Text style={styles.warningText}&gt;
                 * Realice el pago antes de la fecha límite
-              </Text>
-            </>
+              &lt;/Text&gt;
+            &lt;/&gt;
           )}
-        </View>
+        &lt;/View&gt;
 
         {/* Pie de página */}
-        <View style={styles.footer}>
-          <Text>BALTICO DORADO | Tel: +506 2222-2222 | Email: info@balticodorado.com</Text>
-        </View>
-
-        
-      </Page>
-    </Document>
+        &lt;View style={styles.footer}&gt;
+          &lt;Text&gt;BALTICO DORADO | Tel: +506 2222-2222 | Email: info@balticodorado.com&lt;/Text&gt;
+        &lt;/View&gt;
+      &lt;/Page&gt;
+    &lt;/Document&gt;
   );
 };
 
@@ -549,73 +572,27 @@ ReservationPDF.defaultProps = {
 
 export default ReservationPDF;</code></pre>
         </div>
-
-        <div class="description">
-            <h2>Descripción del Componente</h2>
-            <p>Este componente React utiliza <strong>@react-pdf/renderer</strong> para generar documentos PDF con el resumen de reservas de cruceros.</p>
-            
-            <div class="features">
-                <div class="feature">
-                    <h3>Características Principales</h3>
-                    <ul>
-                        <li>Generación de PDFs dinámicos con datos de reserva</li>
-                        <li>Formateo de moneda y fechas</li>
-                        <li>Diseño responsivo para PDF</li>
-                        <li>Tablas para mostrar habitaciones y servicios</li>
-                        <li>Cálculo automático de totales e impuestos</li>
-                    </ul>
-                </div>
-                
-                <div class="feature">
-                    <h3>Dependencias</h3>
-                    <ul>
-                        <li>React</li>
-                        <li>@react-pdf/renderer</li>
-                        <li>prop-types</li>
-                    </ul>
-                </div>
-                
-                <div class="feature">
-                    <h3>Uso</h3>
-                    <pre><code class="language-javascript">import ReservationPDF from './ReservationPDF';
-
-// En tu componente
-&lt;ReservationPDF reservation={reservationData} /&gt;</code></pre>
-                </div>
-            </div>
-            
-            <a href="#" class="btn">Descargar Código</a>
-        </div>
     </div>
-  <div class="implementation-section">
-    <h2><i class="material-icons">get_app</i> Implementación del Botón de Descarga</h2>
+
+    <h2>2. Componente PDFDownloadLink (Botón de Descarga)</h2>
     
-    <div class="code-sample">
+    <div class="note">
+        Este componente se implementa donde se necesite el botón de descarga del PDF. 
+        Recibe como parámetro el componente ReservationPDF con los datos de la reserva.
+    </div>
+    
+    <div class="code-container">
         <div class="code-header">
-            <span>Uso de PDFDownloadLink</span>
-            <span>React-PDF</span>
+            <span>ComponentePadre.js</span>
+            <span>Implementación del Botón</span>
         </div>
-        <pre><code class="language-javascript">import { PDFDownloadLink } from '@react-pdf/renderer';
-import { Button } from '@mui/material';
-import ReservationPDF from './ReservationPDF';
+        <div class="code-content">
+            <pre><code class="language-javascript">import { PDFDownloadLink } from '@react-pdf/renderer';
+import { Button } from '@material-ui/core';
+import ReservationPDF from './PDFGenerator';
 
-// Datos de ejemplo para la reserva
-const reserva = {
-  reserva: {
-    id_reserva: 'CRU2023-001',
-    nombre_crucero: 'Caribe Paradise',
-    duracion_dias: 7,
-    // ... otros datos de reserva
-  },
-  habitaciones: [
-    // ... datos de habitaciones
-  ],
-  complementos: [
-    // ... datos de complementos
-  ]
-};
-
-function DownloadButton() {
+// En tu componente donde implementas el botón
+const PDFDownloadButton = ({ reserva }) => {
   return (
     &lt;PDFDownloadLink
       document={&lt;ReservationPDF reservation={reserva} /&gt;}
@@ -626,55 +603,21 @@ function DownloadButton() {
           variant="contained"
           color="primary"
           disabled={loading}
-          startIcon={loading ? &lt;CircularProgress size={20} /&gt; : &lt;PictureAsPdfIcon /&gt;}
+          startIcon={loading ? &lt;CircularProgress size={20} /&gt; : &lt;GetAppIcon /&gt;}
         &gt;
           {loading ? 'Generando PDF...' : 'Descargar Factura'}
         &lt;/Button&gt;
       )}
     &lt;/PDFDownloadLink&gt;
   );
-}</code></pre>
-    </div>
-
-    <div class="implementation-details">
-        <h3>Características del Componente</h3>
-        <ul>
-            <li><strong>PDFDownloadLink</strong>: Componente de react-pdf/renderer que maneja la generación y descarga</li>
-            <li><strong>Estado de carga</strong>: Muestra feedback visual mientras se genera el PDF</li>
-            <li><strong>Nombre dinámico</strong>: El nombre del archivo incluye el ID de reserva</li>
-            <li><strong>Integración con MUI</strong>: Usa componentes de Material-UI para mejor apariencia</li>
-        </ul>
-
-        <h3>Requisitos</h3>
-        <div class="requirements">
-            <div class="requirement">
-                <i class="material-icons">install_mobile</i>
-                <span>@react-pdf/renderer@2.0.0+</span>
-            </div>
-            <div class="requirement">
-                <i class="material-icons">palette</i>
-                <span>@mui/material@5.0.0+</span>
-            </div>
-            <div class="requirement">
-                <i class="material-icons">icons</i>
-                <span>@mui/icons-material</span>
-            </div>
-        </div>
-
-        <div class="live-demo">
-            <h3>Demo Interactiva</h3>
-            <div id="pdfButtonContainer">
-                <!-- Aquí se inyectaría el botón real en una implementación funcional -->
-                <button class="demo-btn" id="demoPdfButton">
-                    <i class="material-icons">picture_as_pdf</i>
-                    Probar Descarga de PDF
-                </button>
-            </div>
-            <p class="demo-note">Nota: Este es un simulacro. En una implementación real se generaría el PDF.</p>
+};
+</code></pre>
         </div>
     </div>
-</div>
 
-  
+    <div class="note">
+        <strong>Nota:</strong> Para que este código funcione, se debe tener instalada la librería <code>@react-pdf/renderer</code>
+        y el componente debe estar dentro de un proyecto React. El botón asume que estás usando Material-UI para los componentes UI.
+    </div>
 </body>
 </html>
